@@ -3,13 +3,30 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <meta
+        name="description"
+        content="엄준식의 웹 개발 포트폴리오"
+    >
 
     <title>My Portfolio</title>
 
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/main.js" defer></script>
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <script
+        src="js/main.js"
+        defer
+    ></script>
 </head>
+
 
 <body>
 
@@ -18,7 +35,10 @@
     ========================== -->
     <header class="header">
 
-        <nav class="nav">
+        <nav
+            class="nav"
+            aria-label="주요 메뉴"
+        >
 
             <a
                 href="#hero"
@@ -33,36 +53,49 @@
                 class="nav-menu"
             >
                 <li>
-                    <a href="#about" class="nav-link">
+                    <a
+                        href="#about"
+                        class="nav-link"
+                    >
                         About
                     </a>
                 </li>
 
                 <li>
-                    <a href="#skills" class="nav-link">
+                    <a
+                        href="#skills"
+                        class="nav-link"
+                    >
                         Skills
                     </a>
                 </li>
 
                 <li>
-                    <a href="#projects" class="nav-link">
+                    <a
+                        href="#projects"
+                        class="nav-link"
+                    >
                         Projects
                     </a>
                 </li>
 
                 <li>
-                    <a href="#contact" class="nav-link">
+                    <a
+                        href="#contact"
+                        class="nav-link"
+                    >
                         Contact
                     </a>
                 </li>
             </ul>
 
 
-            <!-- 다크 모드 버튼 -->
+            <!-- 다크 모드 -->
             <button
                 class="theme-button"
                 type="button"
                 aria-label="다크 모드로 전환"
+                aria-pressed="false"
             >
                 🌙
             </button>
@@ -78,6 +111,14 @@
             >
                 ☰
             </button>
+
+
+            <!-- 스크린리더용 메뉴 상태 안내 -->
+            <p
+                id="menu-status"
+                class="sr-only"
+                aria-live="polite"
+            ></p>
 
         </nav>
 
@@ -204,6 +245,16 @@
             </h2>
 
 
+            <!-- 프로젝트 언어 필터 -->
+            <div
+                id="project-filters"
+                class="project-filters"
+                role="group"
+                aria-label="프로젝트 언어 필터"
+            ></div>
+
+
+            <!-- GitHub 프로젝트 렌더링 영역 -->
             <div
                 id="projects-container"
                 class="projects-grid"
@@ -358,7 +409,7 @@
 
 
         <a
-            href="https://github.com/"
+            href="https://github.com/Menstear"
             target="_blank"
             rel="noopener noreferrer"
             class="footer-link"
@@ -370,7 +421,7 @@
 
 
     <!-- =========================
-         Scroll Top Button
+         Scroll Top
     ========================== -->
     <button
         id="scroll-top"
