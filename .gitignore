@@ -1,0 +1,22 @@
+cat > .gitignore <<'EOF'
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Environment variables / secrets
+.env
+.env.*
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Backup files
+*~
+*.bak
+EOF

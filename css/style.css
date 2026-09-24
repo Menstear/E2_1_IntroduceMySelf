@@ -5,10 +5,15 @@
 :root {
     --color-bg: #ffffff;
     --color-text: #222222;
+
     --color-primary: #4f46e5;
     --color-secondary: #6b7280;
+
     --color-card: #f5f5f5;
     --color-border: #cccccc;
+
+    --color-error: #b91c1c;
+    --color-success: #15803d;
 
     --spacing-sm: 8px;
     --spacing-md: 16px;
@@ -17,23 +22,47 @@
 
     --border-radius: 12px;
 
-    --shadow-header: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+    --shadow-header:
+        0 2px 10px rgba(0, 0, 0, 0.1);
 
+    --shadow-card:
+        0 4px 12px rgba(0, 0, 0, 0.08);
 
-/* 다크 모드 */
-[data-theme="dark"] {
-    --color-bg: #121212;
-    --color-text: #f5f5f5;
-    --color-primary: #818cf8;
-    --color-secondary: #b0b0b0;
-    --color-card: #1f1f1f;
-    --color-border: #444444;
+    --shadow-card-hover:
+        0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 
 /* =========================
-   2. 기본 스타일 초기화
+   2. 다크 모드 변수
+========================= */
+
+[data-theme="dark"] {
+    --color-bg: #121212;
+    --color-text: #f5f5f5;
+
+    --color-primary: #818cf8;
+    --color-secondary: #b0b0b0;
+
+    --color-card: #1f1f1f;
+    --color-border: #444444;
+
+    --color-error: #fca5a5;
+    --color-success: #86efac;
+
+    --shadow-header:
+        0 2px 10px rgba(0, 0, 0, 0.5);
+
+    --shadow-card:
+        0 4px 12px rgba(0, 0, 0, 0.35);
+
+    --shadow-card-hover:
+        0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+
+/* =========================
+   3. 기본 스타일 초기화
 ========================= */
 
 * {
@@ -58,6 +87,7 @@ body {
 
 a {
     color: inherit;
+
     text-decoration: none;
 }
 
@@ -72,6 +102,7 @@ ul {
 
 img {
     display: block;
+
     max-width: 100%;
 }
 
@@ -83,7 +114,10 @@ textarea {
 }
 
 
-/* 키보드 접근성 */
+/* =========================
+   4. 키보드 접근성
+========================= */
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -94,7 +128,8 @@ textarea:focus-visible {
 
 
 /* sticky header 때문에
-   스크롤 이동 후 제목이 가려지는 것 방지 */
+   앵커 이동 시 제목이 가려지는 것 방지 */
+
 .hero,
 .section {
     scroll-margin-top: 90px;
@@ -102,12 +137,13 @@ textarea:focus-visible {
 
 
 /* =========================
-   3. Header / Navigation
+   5. Header
 ========================= */
 
 .header {
     position: sticky;
     top: 0;
+
     z-index: 1000;
 
     padding: var(--spacing-md);
@@ -125,6 +161,10 @@ textarea:focus-visible {
 }
 
 
+/* =========================
+   6. Navigation
+========================= */
+
 .nav {
     position: relative;
 
@@ -132,6 +172,7 @@ textarea:focus-visible {
     align-items: center;
 
     max-width: 1200px;
+
     margin: 0 auto;
 }
 
@@ -142,12 +183,17 @@ textarea:focus-visible {
 }
 
 
-/* 다크 모드 버튼 */
+/* =========================
+   7. Theme Button
+========================= */
+
 .theme-button {
     margin-left: auto;
+
     padding: 8px;
 
     background: none;
+
     border: none;
 
     color: var(--color-text);
@@ -158,12 +204,17 @@ textarea:focus-visible {
 }
 
 
-/* 햄버거 버튼 */
+/* =========================
+   8. Hamburger Button
+========================= */
+
 .menu-button {
     margin-left: var(--spacing-sm);
+
     padding: 8px;
 
     background: none;
+
     border: none;
 
     color: var(--color-text);
@@ -174,12 +225,17 @@ textarea:focus-visible {
 }
 
 
-/* 모바일 메뉴 */
+/* =========================
+   9. Mobile Navigation Menu
+========================= */
+
 .nav-menu {
     display: none;
 
     position: absolute;
+
     top: calc(100% + var(--spacing-md));
+
     left: 0;
     right: 0;
 
@@ -192,6 +248,7 @@ textarea:focus-visible {
     box-shadow: var(--shadow-header);
 
     flex-direction: column;
+
     gap: var(--spacing-md);
 }
 
@@ -203,6 +260,8 @@ textarea:focus-visible {
 
 .nav-link {
     color: var(--color-text);
+
+    transition: color 0.2s;
 }
 
 
@@ -212,18 +271,22 @@ textarea:focus-visible {
 
 
 /* =========================
-   4. Hero
+   10. Hero
 ========================= */
 
 .hero {
     min-height: 80vh;
 
     display: flex;
+
     flex-direction: column;
+
     justify-content: center;
     align-items: center;
 
-    padding: var(--spacing-xl) var(--spacing-md);
+    padding:
+        var(--spacing-xl)
+        var(--spacing-md);
 
     text-align: center;
 }
@@ -246,7 +309,9 @@ textarea:focus-visible {
 
 .hero-buttons {
     display: flex;
+
     flex-wrap: wrap;
+
     justify-content: center;
 
     gap: var(--spacing-md);
@@ -254,7 +319,7 @@ textarea:focus-visible {
 
 
 /* =========================
-   5. 공통 버튼
+   11. 공통 버튼
 ========================= */
 
 .button {
@@ -263,6 +328,7 @@ textarea:focus-visible {
     padding: 12px 20px;
 
     background-color: var(--color-primary);
+
     color: #ffffff;
 
     border: none;
@@ -284,11 +350,13 @@ textarea:focus-visible {
 
 
 /* =========================
-   6. 공통 Section
+   12. 공통 Section
 ========================= */
 
 .section {
-    padding: var(--spacing-xl) var(--spacing-md);
+    padding:
+        var(--spacing-xl)
+        var(--spacing-md);
 }
 
 
@@ -303,15 +371,18 @@ textarea:focus-visible {
 
 
 /* =========================
-   7. About
+   13. About
 ========================= */
 
 .about-content {
     max-width: 800px;
+
     margin: 0 auto;
 
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
 
     gap: var(--spacing-lg);
@@ -338,15 +409,18 @@ textarea:focus-visible {
 
 
 /* =========================
-   8. Skills
+   14. Skills
 ========================= */
 
 .skills-list {
     max-width: 700px;
+
     margin: 0 auto;
 
     display: flex;
+
     flex-wrap: wrap;
+
     justify-content: center;
 
     gap: var(--spacing-md);
@@ -371,46 +445,212 @@ textarea:focus-visible {
 .skill-item:hover {
     transform: translateY(-3px);
 
-    box-shadow: var(--shadow-header);
+    box-shadow: var(--shadow-card);
 }
 
 
 /* =========================
-   9. Projects
+   15. Projects
 ========================= */
 
 .projects-grid {
     max-width: 1000px;
+
     margin: 0 auto;
 
     display: grid;
 
     grid-template-columns:
-        repeat(auto-fit, minmax(250px, 1fr));
+        repeat(
+            auto-fit,
+            minmax(250px, 1fr)
+        );
 
     gap: var(--spacing-lg);
 }
 
 
+/* 프로젝트 카드 */
+
+.project-card {
+    min-height: 250px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    padding: var(--spacing-lg);
+
+    background-color: var(--color-card);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--border-radius);
+
+    box-shadow:
+        var(--shadow-card);
+
+    transition:
+        transform 0.3s,
+        box-shadow 0.3s;
+}
+
+
+.project-card:hover {
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        var(--shadow-card-hover);
+}
+
+
+.project-title {
+    margin-top: 0;
+
+    margin-bottom:
+        var(--spacing-sm);
+
+    font-size: 1.25rem;
+
+    overflow-wrap: anywhere;
+}
+
+
+.project-description {
+    flex-grow: 1;
+
+    color:
+        var(--color-secondary);
+}
+
+
+.project-meta {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: var(--spacing-md);
+
+    margin-bottom:
+        var(--spacing-md);
+
+    color:
+        var(--color-secondary);
+
+    font-size: 0.875rem;
+}
+
+
+.project-link {
+    margin-top: auto;
+
+    color:
+        var(--color-primary);
+
+    font-weight: bold;
+}
+
+
+.project-link:hover {
+    text-decoration: underline;
+}
+
+
 /* =========================
-   10. Contact
+   16. API 상태
+========================= */
+
+.project-status {
+    grid-column: 1 / -1;
+
+    min-height: 160px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+
+
+/* =========================
+   17. Loading Spinner
+========================= */
+
+.spinner {
+    width: 36px;
+    height: 36px;
+
+    margin-bottom:
+        var(--spacing-md);
+
+    border:
+        4px solid
+        var(--color-border);
+
+    border-top-color:
+        var(--color-primary);
+
+    border-radius: 50%;
+
+    animation:
+        spin
+        0.8s
+        linear
+        infinite;
+}
+
+
+@keyframes spin {
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+
+}
+
+
+/* =========================
+   18. Contact
 ========================= */
 
 .contact-form {
     max-width: 600px;
+
     margin: 0 auto;
 }
 
 
+.form-note {
+    margin-top: 0;
+
+    margin-bottom:
+        var(--spacing-md);
+
+    color:
+        var(--color-secondary);
+}
+
+
 .form-group {
-    margin-bottom: var(--spacing-md);
+    margin-bottom:
+        var(--spacing-md);
 }
 
 
 .form-group label {
     display: block;
 
-    margin-bottom: var(--spacing-sm);
+    margin-bottom:
+        var(--spacing-sm);
 
     font-weight: bold;
 }
@@ -422,11 +662,18 @@ textarea:focus-visible {
 
     padding: 12px;
 
-    background-color: var(--color-bg);
-    color: var(--color-text);
+    background-color:
+        var(--color-bg);
 
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
+    color:
+        var(--color-text);
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        var(--border-radius);
 
     transition:
         border-color 0.3s,
@@ -437,7 +684,8 @@ textarea:focus-visible {
 
 .form-group input:focus,
 .form-group textarea:focus {
-    border-color: var(--color-primary);
+    border-color:
+        var(--color-primary);
 }
 
 
@@ -449,13 +697,57 @@ textarea:focus-visible {
 
 
 /* =========================
-   11. Footer
+   19. Form Validation
+========================= */
+
+.form-error {
+    min-height: 1.4em;
+
+    margin:
+        var(--spacing-sm)
+        0
+        0;
+
+    color:
+        var(--color-error);
+
+    font-size: 0.875rem;
+
+    line-height: 1.4;
+}
+
+
+.form-group input[aria-invalid="true"],
+.form-group textarea[aria-invalid="true"] {
+    border-color:
+        var(--color-error);
+}
+
+
+.form-status {
+    margin:
+        var(--spacing-md)
+        0
+        0;
+
+    color:
+        var(--color-success);
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   20. Footer
 ========================= */
 
 .footer {
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding:
+        var(--spacing-lg)
+        var(--spacing-md);
 
-    background-color: var(--color-card);
+    background-color:
+        var(--color-card);
 
     text-align: center;
 }
@@ -467,14 +759,20 @@ textarea:focus-visible {
 
 
 .footer-link {
-    color: var(--color-primary);
+    color:
+        var(--color-primary);
 
     font-weight: bold;
 }
 
 
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+
 /* =========================
-   12. Scroll Top Button
+   21. Scroll Top
 ========================= */
 
 .scroll-top {
@@ -486,10 +784,13 @@ textarea:focus-visible {
     width: 48px;
     height: 48px;
 
-    background-color: var(--color-primary);
+    background-color:
+        var(--color-primary);
+
     color: #ffffff;
 
     border: none;
+
     border-radius: 50%;
 
     font-size: 1.25rem;
@@ -497,9 +798,11 @@ textarea:focus-visible {
     cursor: pointer;
 
     opacity: 0;
+
     visibility: hidden;
 
-    transform: translateY(10px);
+    transform:
+        translateY(10px);
 
     transition:
         opacity 0.3s,
@@ -510,14 +813,44 @@ textarea:focus-visible {
 
 .scroll-top.visible {
     opacity: 1;
+
     visibility: visible;
 
-    transform: translateY(0);
+    transform:
+        translateY(0);
 }
 
 
 /* =========================
-   13. 태블릿
+   22. Scroll Animation
+========================= */
+
+.reveal {
+    opacity: 0;
+
+    transform:
+        translateY(40px);
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+
+    will-change:
+        opacity,
+        transform;
+}
+
+
+.reveal.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================
+   23. 태블릿
 ========================= */
 
 @media (min-width: 768px) {
@@ -527,24 +860,27 @@ textarea:focus-visible {
     }
 
 
-    .theme-button {
-        margin-left: var(--spacing-md);
-    }
-
-
     .nav-menu {
         display: flex;
 
         position: static;
 
         margin-left: auto;
+
         padding: 0;
 
-        background-color: transparent;
+        background-color:
+            transparent;
 
         box-shadow: none;
 
         flex-direction: row;
+    }
+
+
+    .theme-button {
+        margin-left:
+            var(--spacing-md);
     }
 
 
@@ -568,7 +904,7 @@ textarea:focus-visible {
 
 
 /* =========================
-   14. 데스크톱
+   24. 데스크톱
 ========================= */
 
 @media (min-width: 1024px) {
@@ -581,6 +917,30 @@ textarea:focus-visible {
     .section {
         padding-top: 96px;
         padding-bottom: 96px;
+    }
+
+}
+
+
+/* =========================
+   25. 애니메이션 감소 설정
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            0.01ms !important;
     }
 
 }
