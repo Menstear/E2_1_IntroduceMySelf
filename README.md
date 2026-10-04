@@ -206,14 +206,22 @@ HTML의 `data-theme` 속성과 CSS 변수를 이용해 Light / Dark Theme를 전
 
 사용자가 선택한 테마를 `localStorage`에 저장하고, 페이지를 다시 열 때 불러옵니다.
 
+현재 테마는 `themeState` 객체의 `current` 값으로 관리합니다. 초기값은 `localStorage`에 저장된 값이 `dark`이면 `dark`, 그 외에는 `light`로 설정합니다.
+
 ```javascript
-localStorage.setItem('theme', currentTheme);
-localStorage.getItem('theme');
+const themeState = {
+    current:
+        localStorage.getItem('theme') === 'dark'
+            ? 'dark'
+            : 'light'
+};
+
+localStorage.setItem('theme', themeState.current);
 ```
 
 ```text
 테마 버튼 클릭
-→ currentTheme 변경
+→ themeState.current 변경
 → localStorage 저장
 → renderTheme()
 → data-theme 변경
@@ -358,6 +366,8 @@ idle
 
 프로젝트 카드에는 저장소 이름, 설명, 주 언어, Star 수, GitHub 링크를 표시합니다. 카드 하나는 `<article>` 요소로 생성합니다.
 
+`success` 상태에서 언어 필터를 적용한 결과가 0건이면 빈 상태(`empty`)와는 별도로 “해당 언어의 프로젝트가 없습니다.”를 표시합니다. 이는 저장소 자체가 없는 `empty`(“표시할 프로젝트가 없습니다.”)와 구분되며, 상태 값은 그대로 `success`를 유지합니다.
+
 “다시 시도” 버튼은 `fetchProjects()`를 다시 실행하는 **수동 재시도** 기능입니다. 자동 재시도나 지수 백오프는 구현하지 않았습니다.
 
 ### 15. 오류 처리
@@ -387,13 +397,37 @@ if (!Array.isArray(data)) {
 }
 ```
 
+### 16. 응답 데이터 정규화
+
+API 응답을 그대로 저장하지 않고, 렌더링에 필요한 필드만 추려서 상태를 정규화합니다. 각 저장소 객체에서 `name`, `description`, `html_url`, `language`, `stargazers_count`만 추출해 `projectState.projects`에 저장합니다.
+
+```javascript
+projectState.projects = data.map(
+    ({
+        name,
+        description,
+        html_url,
+        language,
+        stargazers_count
+    }) => ({
+        name,
+        description,
+        html_url,
+        language,
+        stargazers_count
+    })
+);
+```
+
+이렇게 하면 상태에 불필요한 필드가 섞이지 않고, 이후 렌더링과 필터가 사용하는 데이터 형태가 명확해집니다. 빈 응답 여부(`empty` 상태)도 원본 응답이 아니라 정규화한 `projectState.projects` 배열의 길이로 판단합니다.
+
 현재 요청은 한 번의 API 응답을 사용하며, 추가 페이지를 연속으로 가져오는 페이지네이션은 구현하지 않았습니다. 언어 필터는 실제로 불러온 저장소 배열에 적용됩니다.
 
 ---
 
 ## 배열 메서드와 프로젝트 필터
 
-### 16. map()
+### 17. map()
 
 저장소 배열을 프로젝트 카드 배열로 변환할 때 사용합니다. 언어 목록을 추출할 때도 사용합니다.
 
@@ -411,7 +445,7 @@ projectState.projects.map(
 → Projects 영역에 표시
 ```
 
-### 17. filter()
+### 18. filter()
 
 선택한 언어와 일치하는 프로젝트만 가져올 때 사용합니다.
 
@@ -437,13 +471,13 @@ const languages = projectState.projects
 
 여기서 `null`을 제외하는 대상은 **필터 버튼용 언어 목록**입니다. 언어가 없는 저장소 자체를 원본 프로젝트 배열에서 삭제하는 것은 아니므로, 해당 저장소도 “전체”에서는 표시됩니다.
 
-### 18. forEach()
+### 19. forEach()
 
 여러 요소를 순회하며 이벤트를 연결하거나 Observer를 등록할 때 사용합니다.
 
 주요 사용 위치는 내부 링크 이벤트 등록, Contact 입력 이벤트 등록, 스크롤 애니메이션 대상 등록, 필터 버튼 생성입니다.
 
-### 19. 언어 필터와 구조분해 할당
+### 20. 언어 필터와 구조분해 할당
 
 필터 버튼은 GitHub API에서 받은 저장소의 언어 정보로 자동 생성합니다. `Set`으로 중복 언어를 제거하고 정렬한 뒤 “전체” 버튼과 함께 표시합니다.
 
@@ -461,6 +495,8 @@ const languages = projectState.projects
 ```
 
 필터 클릭 시에는 API를 다시 호출하지 않고 이미 불러온 배열을 사용합니다. 선택한 필터는 `active` 클래스와 `aria-pressed`로 표현합니다.
+
+반대로 `fetchProjects()`로 데이터를 다시 불러올 때는 `selectedLanguage`를 `all`로 초기화하고 기존 필터 버튼을 비운 뒤, 새 응답으로 필터 목록을 다시 생성합니다. 따라서 “다시 시도” 등으로 재요청하면 이전에 선택한 언어 필터는 유지되지 않습니다.
 
 Repository 객체의 필요한 값은 구조분해 할당으로 꺼냅니다.
 
@@ -490,7 +526,7 @@ descriptionElement.textContent =
 
 | 기능 | 시작점 | 변경되는 상태 | 화면 업데이트 |
 |---|---|---|---|
-| 다크 모드 | 테마 버튼 클릭 | `currentTheme` | `renderTheme()` |
+| 다크 모드 | 테마 버튼 클릭 | `themeState.current` | `renderTheme()` |
 | Contact 폼 | `submit`, `input` | `formState` | `renderContactForm()` |
 | GitHub API | API 요청과 응답 | `projectState.status`, `projects`, `error` | `renderProjects()` |
 | 언어 필터 | 필터 버튼 클릭 | `selectedLanguage` | `renderProjectFilters()`, `renderProjects()` |

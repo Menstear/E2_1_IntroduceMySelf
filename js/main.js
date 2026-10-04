@@ -54,16 +54,14 @@ const prefersReducedMotion =
    2. Theme State
 ========================= */
 
-const savedTheme =
-    localStorage.getItem(
-        'theme'
-    );
+const themeState = {
 
+    current:
+        localStorage.getItem('theme') === 'dark'
+            ? 'dark'
+            : 'light'
 
-let currentTheme =
-    savedTheme === 'dark'
-        ? 'dark'
-        : 'light';
+};
 
 
 /* =========================
@@ -75,11 +73,11 @@ const renderTheme = () => {
     document.documentElement
         .dataset
         .theme =
-        currentTheme;
+        themeState.current;
 
 
     const isDark =
-        currentTheme === 'dark';
+        themeState.current === 'dark';
 
 
     themeButton.textContent =
@@ -379,15 +377,15 @@ themeButton
         'click',
         () => {
 
-            currentTheme =
-                currentTheme === 'light'
+            themeState.current =
+                themeState.current === 'light'
                     ? 'dark'
                     : 'light';
 
 
             localStorage.setItem(
                 'theme',
-                currentTheme
+                themeState.current
             );
 
 
@@ -1659,8 +1657,28 @@ const fetchProjects =
             }
 
 
+            /*
+             응답 전체를 그대로 저장하지 않고
+             렌더링에 필요한 필드만 추려
+             상태를 정규화한다
+            */
+
             projectState.projects =
-                data;
+                data.map(
+                    ({
+                        name,
+                        description,
+                        html_url,
+                        language,
+                        stargazers_count
+                    }) => ({
+                        name,
+                        description,
+                        html_url,
+                        language,
+                        stargazers_count
+                    })
+                );
 
 
             /*
@@ -1669,7 +1687,7 @@ const fetchProjects =
 
             projectState.status =
 
-                data.length === 0
+                projectState.projects.length === 0
 
                     ? 'empty'
 
