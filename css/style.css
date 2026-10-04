@@ -3,6 +3,7 @@
 ========================= */
 
 :root {
+    --font-family-base: Arial, sans-serif;
     --color-bg: #ffffff;
     --color-text: #222222;
 
@@ -78,7 +79,7 @@ body {
     background-color: var(--color-bg);
     color: var(--color-text);
 
-    font-family: Arial, sans-serif;
+    font-family: var(--font-family-base);
     line-height: 1.6;
 
     transition:
